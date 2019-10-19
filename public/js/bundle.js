@@ -58486,7 +58486,8 @@ var HomeScene = function (_EventEmitter) {
 		_this.renderer.setSize(_this.width, _this.height);
 
 		_this.scene2 = new THREE.Scene();
-		// this.interaction_second = new Interaction(this.renderer, this.scene2, this.camera);
+
+		_this.interaction_second = new _three2.Interaction(_this.renderer, _this.scene2, _this.camera);
 		// bg
 		_this.loader2 = new THREE.TextureLoader();
 		_this.loader2.load('/images/bgTextureImage.png', function (texture) {
@@ -58509,12 +58510,221 @@ var HomeScene = function (_EventEmitter) {
 			_light.position.set(0, -100, 0);
 			_this.scene2.add(_light);
 
-			_this.helperGrid = new THREE.GridHelper(10, 10);
-			_this.helperGrid.position.y = -0.5;
-			_this.scene2.add(_this.helperGrid);
-			// this.update(this.scene2, this.camera);
+			// this.helperGrid = new THREE.GridHelper(10, 10);
+			// this.helperGrid.position.y = -0.5;
+			// this.scene2.add(this.helperGrid);
 		}
+		// this.camera.position.set(0, 0, 0);
+		_this.h2 = new THREE.PlaneGeometry(20, 20);
+		_this.imgSrc2 = '/images/header.png';
+		_this.mesh2;
+		_this.tex2 = new THREE.TextureLoader().load(_this.imgSrc2, function (tex) {
+			tex.needsUpdate = true;
+			_this.mesh2.scale.set(1.0, tex.image.height / tex.image.width, 1.0);
+		});
+		_this.material2 = new THREE.MeshBasicMaterial({
+			map: _this.tex2,
+			transparent: true
+		});
+		_this.mesh2 = new THREE.Mesh(_this.h2, _this.material2);
+		_this.mesh2.position.set(0, 6, -10);
+		_this.scene2.add(_this.mesh2);
 
+		_this.h3 = new THREE.PlaneGeometry(10, 10);
+		_this.imgSrc3 = '/images/panel.png';
+		_this.mesh3;
+		_this.tex3 = new THREE.TextureLoader().load(_this.imgSrc3, function (tex) {
+			tex.needsUpdate = true;
+			_this.mesh3.scale.set(1.0, tex.image.height / tex.image.width, 1.0);
+		});
+		_this.material3 = new THREE.MeshBasicMaterial({
+			map: _this.tex3,
+			transparent: true
+		});
+		_this.mesh3 = new THREE.Mesh(_this.h3, _this.material3);
+		_this.mesh3.position.set(9, -1, -10);
+		_this.scene2.add(_this.mesh3);
+
+		_this.h4 = new THREE.PlaneGeometry(3, 3);
+		_this.imgSrc4 = '/images/left.png';
+		_this.mesh4;
+		_this.tex4 = new THREE.TextureLoader().load(_this.imgSrc4, function (tex) {
+			tex.needsUpdate = true;
+			_this.mesh4.scale.set(1.0, tex.image.height / tex.image.width, 1.0);
+		});
+		_this.material4 = new THREE.MeshBasicMaterial({
+			map: _this.tex4,
+			transparent: true
+		});
+		_this.mesh4 = new THREE.Mesh(_this.h4, _this.material4);
+		_this.mesh4.position.set(-6, -1, -10);
+		_this.scene2.add(_this.mesh4);
+
+		_this.h5 = new THREE.PlaneGeometry(3, 3);
+		_this.imgSrc5 = '/images/right.png';
+		_this.mesh5;
+		_this.tex5 = new THREE.TextureLoader().load(_this.imgSrc5, function (tex) {
+			tex.needsUpdate = true;
+			_this.mesh5.scale.set(1.0, tex.image.height / tex.image.width, 1.0);
+		});
+		_this.material5 = new THREE.MeshBasicMaterial({
+			map: _this.tex5,
+			transparent: true
+		});
+		_this.mesh5 = new THREE.Mesh(_this.h5, _this.material5);
+		_this.mesh5.position.set(3, -1, -10);
+		_this.scene2.add(_this.mesh5);
+
+		_this.h6 = new THREE.PlaneGeometry(1.5, 1.5);
+		_this.imgSrc6 = '/images/right.png';
+		_this.mesh6;
+		_this.tex6 = new THREE.TextureLoader().load(_this.imgSrc6, function (tex) {
+			tex.needsUpdate = true;
+			_this.mesh6.scale.set(1.0, tex.image.height / tex.image.width, 1.0);
+		});
+		_this.material6 = new THREE.MeshBasicMaterial({
+			map: _this.tex6,
+			transparent: true
+		});
+		_this.mesh6 = new THREE.Mesh(_this.h6, _this.material6);
+		_this.mesh6.position.set(11, 2, -10);
+		_this.scene2.add(_this.mesh6);
+
+		_this.h6left = new THREE.PlaneGeometry(1.5, 1.5);
+		_this.imgSrc6left = '/images/left.png';
+		_this.mesh6left;
+		_this.tex6left = new THREE.TextureLoader().load(_this.imgSrc6left, function (tex) {
+			tex.needsUpdate = true;
+			_this.mesh6left.scale.set(1.0, tex.image.height / tex.image.width, 1.0);
+		});
+		_this.material6left = new THREE.MeshBasicMaterial({
+			map: _this.tex6left,
+			transparent: true
+		});
+		_this.mesh6left = new THREE.Mesh(_this.h6left, _this.material6left);
+		_this.mesh6left.position.set(8, 2, -10);
+		_this.scene2.add(_this.mesh6left);
+
+		// this.mesh6left.cursor = 'pointer';
+		_this.mesh6left.on('click', function (ev) {
+			console.log('i am here', ev);
+			_this.sphere.material.color.set('green');
+			// currentScene = 2;
+			// this.renderer.clear();
+			// console.log('scene', currentScene);
+			// this.camera.position.set(0, 0, 0);
+			// this.update(this.scene2, this.camera);
+			return currentScene;
+		});
+
+		// adding font
+
+		_this.loaderFont = new THREE.FontLoader();
+
+		_this.loaderFont.load('/fonts/SulphurPoint_Regular.json', function (font) {
+			var geometryFont = new THREE.TextGeometry('Hels!', {
+				font: font,
+				size: 1,
+				height: 1
+				// curveSegments: 1,
+				// bevelEnabled: true,
+				// bevelSize: 1,
+				// bevelOffset: 0,
+				// bevelSegments: 0,
+			});
+			var textMaterial = new THREE.MeshBasicMaterial({ color: 'white' });
+
+			var mesh = new THREE.Mesh(geometryFont, textMaterial);
+			mesh.position.set(0, 0, -8);
+			mesh.rotation.z = -0.5;
+			_this.scene2.add(mesh);
+		});
+
+		///////////
+		_this.h7 = new THREE.PlaneGeometry(1.5, 1.5);
+		_this.imgSrc7 = '/images/right.png';
+		_this.mesh7;
+		_this.tex7 = new THREE.TextureLoader().load(_this.imgSrc7, function (tex) {
+			tex.needsUpdate = true;
+			_this.mesh7.scale.set(1.0, tex.image.height / tex.image.width, 1.0);
+		});
+		_this.material7 = new THREE.MeshBasicMaterial({
+			map: _this.tex7,
+			transparent: true
+		});
+		_this.mesh7 = new THREE.Mesh(_this.h7, _this.material7);
+		_this.mesh7.position.set(11, 0, -10);
+		_this.scene2.add(_this.mesh7);
+
+		var geometry = new THREE.SphereGeometry(5, 9, 9);
+		var material = new THREE.MeshPhongMaterial({
+			color: 'red'
+		});
+
+		_this.sphere = new THREE.Mesh(geometry, material);
+		_this.sphere.position.set(-2, -2, -18);
+		_this.scene2.add(_this.sphere);
+		_this.options = {
+			velx: 0,
+			vely: 0.01,
+			camera: {
+				speed: 0.0001
+			},
+			stop: function stop() {
+				this.velx = 0;
+				this.vely = 0;
+			},
+			reset: function reset() {
+				this.velx = 0.1;
+				this.vely = 0.1;
+				this.camera.position.z = 75;
+				this.camera.position.x = 0;
+				this.camera.position.y = 0;
+				this.sphere.scale.x = 1;
+				this.sphere.scale.y = 1;
+				this.sphere.scale.z = 1;
+				this.sphere.material.wireframe = true;
+			}
+		};
+		var gui = new dat.GUI();
+
+		// var cam = gui.addFolder('Camera');
+		// cam.add(this.options.camera, "speed", 0, 0.001).listen();
+		// cam.add(this.camera.position, 'y', 0, 100).listen();
+		// cam.open();
+
+		var velocity = gui.addFolder('Velocity');
+		// velocity
+		//   .add(this.options, "velx", -0.2, 0.2)
+		//   .name("X")
+		//   .listen();
+		velocity.add(_this.options, 'vely', -0.2, 0.2).name('Y').listen();
+		velocity.open();
+
+		var box = gui.addFolder('Cube');
+		var testVal = box.add(_this.sphere.scale, 'x', 0, 3).name('D');
+		// console.log("testVal", testVal.getValue());
+		testVal.onChange(function (t) {
+			_this.sphere.scale.y = t;
+			_this.sphere.scale.z = t;
+
+			// console.log(t);
+		});
+		testVal.listen();
+
+		// box
+		//   .add(this.sphere.scale, "y", 0, 3)
+		//   .name("Height")
+		//   .listen();
+		// box
+		//   .add(this.sphere.scale, "z", 0, 3)
+		//   .name("Length")
+		//   .listen();
+		box.add(_this.sphere.material, 'wireframe').listen();
+		box.open();
+
+		gui.add(_this.options, 'stop');
+		gui.add(_this.options, 'reset');
 		//scene 1
 
 		//THREE scene
@@ -58529,13 +58739,6 @@ var HomeScene = function (_EventEmitter) {
 
 		// this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 		// this.controls.update();
-
-		var geometry = new THREE.SphereGeometry(5, 15, 15);
-		var material = new THREE.MeshPhongMaterial({
-			color: 0x404040
-		});
-		_this.sphere = new THREE.Mesh(geometry, material);
-		_this.scene.add(_this.sphere);
 
 		// bg
 		_this.loader = new THREE.TextureLoader();
@@ -58560,7 +58763,7 @@ var HomeScene = function (_EventEmitter) {
 		// create a plane geometry for the image with a width of 10
 		// and a height that preserves the image's aspect ratio
 		_this.headerGeometry = new THREE.PlaneGeometry(300, 300);
-		_this.imgSrc = '/images/chooseyourgame.png';
+		_this.imgSrc = '/images/logo.png';
 		_this.mesh;
 		_this.tex = new THREE.TextureLoader().load(_this.imgSrc, function (tex) {
 			tex.needsUpdate = true;
@@ -58588,14 +58791,67 @@ var HomeScene = function (_EventEmitter) {
 			transparent: true
 		});
 		_this.meshStartButton = new THREE.Mesh(_this.startGameButtonGeometry, _this.materialStartButton);
-		_this.meshStartButton.position.set(150, 100, 0);
+		_this.meshStartButton.position.set(250, 110, 0);
 		_this.scene.add(_this.meshStartButton);
 		_this.meshStartButton.cursor = 'pointer';
 		_this.meshStartButton.on('click', function (ev) {
 			console.log('i am here', ev);
+			currentScene = 3;
+			_this.renderer.clear();
+			console.log('scene', currentScene);
+			_this.camera.position.set(0, 0, 0);
+			_this.update(_this.sceneStarInfo, _this.camera);
+			return currentScene;
+		});
+
+		_this.INFOButtonGeometry = new THREE.PlaneGeometry(200, 150);
+		_this.imgSrcINFO = '/images/INFO.png';
+		_this.meshINFOButton;
+		_this.tex = new THREE.TextureLoader().load(_this.imgSrcINFO, function (tex) {
+			tex.needsUpdate = true;
+			_this.meshINFOButton.scale.set(1.0, tex.image.height / tex.image.width, 1.0);
+		});
+		_this.materialStartButton = new THREE.MeshBasicMaterial({
+			map: _this.tex,
+			transparent: true
+		});
+		_this.meshINFOButton = new THREE.Mesh(_this.INFOButtonGeometry, _this.materialStartButton);
+		_this.meshINFOButton.position.set(250, 50, 0);
+		_this.scene.add(_this.meshINFOButton);
+		_this.meshINFOButton.cursor = 'pointer';
+		_this.meshINFOButton.on('click', function (ev) {
+			console.log('i am here', ev);
 			currentScene = 2;
 			_this.renderer.clear();
 			console.log('scene', currentScene);
+			_this.camera.position.set(0, 0, 0);
+
+			_this.update(_this.scene2, _this.camera);
+			return currentScene;
+		});
+
+		_this.creditsButtonGeometry = new THREE.PlaneGeometry(200, 150);
+		_this.imgSrcCredits = '/images/credits.png';
+		_this.meshcreditsButton;
+		_this.tex = new THREE.TextureLoader().load(_this.imgSrcCredits, function (tex) {
+			tex.needsUpdate = true;
+			_this.meshcreditsButton.scale.set(1.0, tex.image.height / tex.image.width, 1.0);
+		});
+		_this.materialStartButton = new THREE.MeshBasicMaterial({
+			map: _this.tex,
+			transparent: true
+		});
+		_this.meshcreditsButton = new THREE.Mesh(_this.creditsButtonGeometry, _this.materialStartButton);
+		_this.meshcreditsButton.position.set(250, -10, 0);
+		_this.scene.add(_this.meshcreditsButton);
+		_this.meshcreditsButton.cursor = 'pointer';
+		_this.meshcreditsButton.on('click', function (ev) {
+			console.log('i am here', ev);
+			currentScene = 2;
+			_this.renderer.clear();
+			console.log('scene', currentScene);
+			_this.camera.position.set(0, 0, 0);
+
 			_this.update(_this.scene2, _this.camera);
 			return currentScene;
 		});
@@ -58737,10 +58993,16 @@ var HomeScene = function (_EventEmitter) {
 
 		//scene 2
 
+		// STAR SCENE INFO
+
+		_this.sceneStarInfo = new THREE.Scene();
+
 		if (currentScene === 1) {
 			_this.update(_this.scene, _this.camera);
 		} else if (currentScene === 2) {
 			_this.update(_this.scene2, _this.camera);
+		} else if (currentScene === 3) {
+			_this.update(_this.sceneStarInfo, _this.camera);
 		}
 
 		console.log('scene', currentScene);
@@ -58794,6 +59056,9 @@ var HomeScene = function (_EventEmitter) {
 			});
 
 			this.MainScreenDisplay(this.planets, this.ctx, this.bgStars, this.t, this.star, this.glows);
+
+			this.sphere.rotation.x += this.options.velx;
+			this.sphere.rotation.y += this.options.vely;
 			this.renderer.clear();
 
 			this.render(scene, camera);
