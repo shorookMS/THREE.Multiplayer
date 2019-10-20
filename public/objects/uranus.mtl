@@ -1,0 +1,24 @@
+newmtl ring
+Kd 0.784314 0.784314 0.784314
+Ke 0 0 0
+Ka 1 1 1
+Ks 0.8 0.8 0.8
+Ns 400
+Tr 0
+d 1
+Ni 1
+Tf 1 1 1
+map_Kd C:Noura/2019/nasa/2k_uranus.jpg
+
+newmtl uranus
+Kd 0.784314 0.784314 0.784314
+Ke 0 0 0
+Ka 1 1 1
+Ks 0.8 0.8 0.8
+Ns 400
+Tr 0
+d 1
+Ni 1
+Tf 1 1 1
+map_Kd C:Noura/2019/nasa/2k_uranus.jpg
+

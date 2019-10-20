@@ -94,6 +94,7 @@ class HomeScene extends EventEmitter {
 		this.mesh2.position.set(0, 6, -10);
 		this.scene2.add(this.mesh2);
 
+		//panel
 		this.h3 = new THREE.PlaneGeometry(10, 10);
 		this.imgSrc3 = '/images/panel.png';
 		this.mesh3;
@@ -109,7 +110,8 @@ class HomeScene extends EventEmitter {
 		this.mesh3.position.set(9, -1, -10);
 		this.scene2.add(this.mesh3);
 
-		this.h4 = new THREE.PlaneGeometry(3, 3);
+		//left
+		this.h4 = new THREE.PlaneGeometry(2, 2);
 		this.imgSrc4 = '/images/left.png';
 		this.mesh4;
 		this.tex4 = new THREE.TextureLoader().load(this.imgSrc4, tex => {
@@ -121,10 +123,11 @@ class HomeScene extends EventEmitter {
 			transparent: true,
 		});
 		this.mesh4 = new THREE.Mesh(this.h4, this.material4);
-		this.mesh4.position.set(-6, -1, -10);
+		this.mesh4.position.set(-10, -2, -20);
 		this.scene2.add(this.mesh4);
 
-		this.h5 = new THREE.PlaneGeometry(3, 3);
+		//right
+		this.h5 = new THREE.PlaneGeometry(2, 2);
 		this.imgSrc5 = '/images/right.png';
 		this.mesh5;
 		this.tex5 = new THREE.TextureLoader().load(this.imgSrc5, tex => {
@@ -136,10 +139,27 @@ class HomeScene extends EventEmitter {
 			transparent: true,
 		});
 		this.mesh5 = new THREE.Mesh(this.h5, this.material5);
-		this.mesh5.position.set(3, -1, -10);
+		this.mesh5.position.set(5, -2, -20);
 		this.scene2.add(this.mesh5);
 
-		this.h6 = new THREE.PlaneGeometry(1.5, 1.5);
+		//other
+
+		const star_age = ['early', 'middle', 'late', 'dead'];
+		const star_color = ['yellow', 'red', 'blue', 'white', 'brown', 'green'];
+		const tyep_planet = ['ice', 'rocky', 'gas'];
+		const star_size = [3, 5];
+		const star_temp = [
+			'1,800 - 3,500 °C',
+			'3,500 - 5,000 °C',
+			'5,000 - 7,300 °C',
+			'4,000 - 150,000 °C',
+			'7,300 - 200,000 °C',
+		];
+		this.iStarColor = 0;
+		this.iStarsize = 0;
+
+		// button1
+		this.h6 = new THREE.PlaneGeometry(1, 1);
 		this.imgSrc6 = '/images/right.png';
 		this.mesh6;
 		this.tex6 = new THREE.TextureLoader().load(this.imgSrc6, tex => {
@@ -154,7 +174,8 @@ class HomeScene extends EventEmitter {
 		this.mesh6.position.set(11, 2, -10);
 		this.scene2.add(this.mesh6);
 
-		this.h6left = new THREE.PlaneGeometry(1.5, 1.5);
+		// button 1
+		this.h6left = new THREE.PlaneGeometry(1, 1);
 		this.imgSrc6left = '/images/left.png';
 		this.mesh6left;
 		this.tex6left = new THREE.TextureLoader().load(this.imgSrc6left, tex => {
@@ -169,43 +190,66 @@ class HomeScene extends EventEmitter {
 		this.mesh6left.position.set(8, 2, -10);
 		this.scene2.add(this.mesh6left);
 
-		// this.mesh6left.cursor = 'pointer';
-		this.mesh6left.on('click', ev => {
-			console.log('i am here', ev);
-			this.sphere.material.color.set('green');
-			// currentScene = 2;
-			// this.renderer.clear();
-			// console.log('scene', currentScene);
-			// this.camera.position.set(0, 0, 0);
-			// this.update(this.scene2, this.camera);
-			return currentScene;
+		// color text
+
+		this.colorText = new THREE.PlaneGeometry(4, 4);
+		this.ImgSRccolorText = '/images/color.png';
+		this.meshcolorText;
+		this.texcolorText = new THREE.TextureLoader().load(this.ImgSRccolorText, tex => {
+			tex.needsUpdate = true;
+			this.meshcolorText.scale.set(1.0, tex.image.height / tex.image.width, 1.0);
 		});
+		this.materialcolorText = new THREE.MeshBasicMaterial({
+			map: this.texcolorText,
+			transparent: true,
+		});
+		this.meshcolorText = new THREE.Mesh(this.colorText, this.materialcolorText);
+		this.meshcolorText.position.set(9.5, 2, -10);
+		this.scene2.add(this.meshcolorText);
+
+		var geometry = new THREE.SphereGeometry(5, 9, 9);
+		var material = new THREE.MeshPhongMaterial({
+			color: 'red',
+		});
+
+		// // this.mesh6left.cursor = 'pointer';
+		// this.mesh6left.on('click', ev => {
+		// 	console.log('i am here', ev);
+		// 	this.sphere.material.color.set('green');
+		// 	// currentScene = 2;
+		// 	// this.renderer.clear();
+		// 	// console.log('scene', currentScene);
+		// 	// this.camera.position.set(0, 0, 0);
+		// 	// this.update(this.scene2, this.camera);
+		// 	return currentScene;
+		// });
 
 		// adding font
 
-		this.loaderFont = new THREE.FontLoader();
+		// this.loaderFont = new THREE.FontLoader();
 
-		this.loaderFont.load('/fonts/SulphurPoint_Regular.json', font => {
-			var geometryFont = new THREE.TextGeometry('Hels!', {
-				font: font,
-				size: 1,
-				height: 1,
-				// curveSegments: 1,
-				// bevelEnabled: true,
-				// bevelSize: 1,
-				// bevelOffset: 0,
-				// bevelSegments: 0,
-			});
-			var textMaterial = new THREE.MeshBasicMaterial({ color: 'white' });
+		// this.loaderFont.load('/fonts/SulphurPoint_Regular.json', font => {
+		// 	var geometryFont = new THREE.TextGeometry('Hels!', {
+		// 		font: font,
+		// 		size: 1,
+		// 		height: 1,
+		// 		// curveSegments: 1,
+		// 		// bevelEnabled: true,
+		// 		// bevelSize: 1,
+		// 		// bevelOffset: 0,
+		// 		// bevelSegments: 0,
+		// 	});
+		// 	var textMaterial = new THREE.MeshBasicMaterial({ color: 'white' });
 
-			var mesh = new THREE.Mesh(geometryFont, textMaterial);
-			mesh.position.set(0, 0, -8);
-			mesh.rotation.z = -0.5;
-			this.scene2.add(mesh);
-		});
+		// 	var mesh = new THREE.Mesh(geometryFont, textMaterial);
+		// 	mesh.position.set(0, 0, -8);
+		// 	mesh.rotation.z = -0.5;
+		// 	this.scene2.add(mesh);
+		// });
 
 		///////////
-		this.h7 = new THREE.PlaneGeometry(1.5, 1.5);
+
+		this.h7 = new THREE.PlaneGeometry(1, 1);
 		this.imgSrc7 = '/images/right.png';
 		this.mesh7;
 		this.tex7 = new THREE.TextureLoader().load(this.imgSrc7, tex => {
@@ -220,6 +264,38 @@ class HomeScene extends EventEmitter {
 		this.mesh7.position.set(11, 0, -10);
 		this.scene2.add(this.mesh7);
 
+		// button 1
+		this.h7left = new THREE.PlaneGeometry(1, 1);
+		this.imgSrc7left = '/images/left.png';
+		this.mesh7left;
+		this.tex7left = new THREE.TextureLoader().load(this.imgSrc7left, tex => {
+			tex.needsUpdate = true;
+			this.mesh7left.scale.set(1.0, tex.image.height / tex.image.width, 1.0);
+		});
+		this.material7left = new THREE.MeshBasicMaterial({
+			map: this.tex7left,
+			transparent: true,
+		});
+		this.mesh7left = new THREE.Mesh(this.h7left, this.material7left);
+		this.mesh7left.position.set(8, 0, -10);
+		this.scene2.add(this.mesh7left);
+		// color text
+
+		this.sizetext = new THREE.PlaneGeometry(4, 4);
+		this.ImgSRcsizetext = '/images/size.png';
+		this.meshsizetext;
+		this.texsizetext = new THREE.TextureLoader().load(this.ImgSRcsizetext, tex => {
+			tex.needsUpdate = true;
+			this.meshsizetext.scale.set(1.0, tex.image.height / tex.image.width, 1.0);
+		});
+		this.materialsizetext = new THREE.MeshBasicMaterial({
+			map: this.texsizetext,
+			transparent: true,
+		});
+		this.meshsizetext = new THREE.Mesh(this.sizetext, this.materialsizetext);
+		this.meshsizetext.position.set(9.5, 0, -10);
+		this.scene2.add(this.meshsizetext);
+
 		var geometry = new THREE.SphereGeometry(5, 9, 9);
 		var material = new THREE.MeshPhongMaterial({
 			color: 'red',
@@ -227,7 +303,66 @@ class HomeScene extends EventEmitter {
 
 		this.sphere = new THREE.Mesh(geometry, material);
 		this.sphere.position.set(-2, -2, -18);
+		this.sphere.material.color.set(star_color[this.iStarColor]);
+		//  {
+		// 		const mtlLoader = new THREE.MTLLoader();
+		// 		mtlLoader.load('/images/bg/windmill.mtl', mtlParseResult => {
+		// 			const objLoader = new THREE.OBJLoader2();
+		// 			const materialsfghj = MtlObjBridge.addMaterialsFromMtlLoader(mtlParseResult);
+		// 			objLoader.addMaterials(materialsfghj);
+		// 			objLoader.load('https://threejsfundamentals.org/threejs/resources/models/windmill/windmill.obj', root => {
+		// 				root.position.set(-2, -2, -18);
+
+		// 				this.scene2.add(root);
+		// 			});
+		// 		});
+		//  }
 		this.scene2.add(this.sphere);
+
+		// const objloader = new THREE.OBJLoader2();
+		// objloader.load
+
+		this.mesh6left.on('click', () => {
+			if (this.iStarColor == star_color.length - 1) {
+				this.iStarColor = 0;
+			} else {
+				this.iStarColor = this.iStarColor + 1;
+			}
+
+			this.sphere.material.color.set(star_color[this.iStarColor]);
+		});
+
+		this.mesh6.on('click', () => {
+			if (this.iStarColor == 0) {
+				this.iStarColor = star_color.length - 1;
+			} else {
+				this.iStarColor = this.iStarColor - 1;
+			}
+			this.sphere.material.color.set(star_color[this.iStarColor]);
+		});
+
+		this.mesh7.on('click', () => {
+			if (this.iStarsize == star_size.length - 1) {
+				this.iStarsize = 0;
+			} else {
+				this.iStarsize = this.iStarsize + 1;
+			}
+
+			this.sphere.scale.x = star_size[this.iStarsize];
+			this.sphere.scale.y = star_size[this.iStarsize];
+			this.sphere.scale.z = star_size[this.iStarsize];
+		});
+
+		this.mesh7left.on('click', () => {
+			if (this.iStarsize == 0) {
+				this.iStarsize = star_size.length - 1;
+			} else {
+				this.iStarsize = this.iStarsize - 1;
+			}
+			this.sphere.scale.x = star_size[this.iStarsize];
+			this.sphere.scale.y = star_size[this.iStarsize];
+			this.sphere.scale.z = star_size[this.iStarsize];
+		});
 		this.options = {
 			velx: 0,
 			vely: 0.01,
@@ -575,11 +710,180 @@ class HomeScene extends EventEmitter {
 			this.scene.add(this.helperGrid);
 		}
 
-		//scene 2
-
-		// STAR SCENE INFO
+		// STAR SCENE INFO (3)
 
 		this.sceneStarInfo = new THREE.Scene();
+
+		this.loader3 = new THREE.TextureLoader();
+		this.loader3.load('/images/bgTextureImage.png', texture => {
+			this.sceneStarInfo.background = texture;
+		});
+		{
+			const color = 0xffffff;
+			const intensity = 1;
+			const light = new THREE.DirectionalLight(color, intensity);
+			light.position.set(0, 10, 0);
+			light.target.position.set(-8, 0, 0);
+			this.sceneStarInfo.add(light);
+			this.sceneStarInfo.add(light.target);
+		}
+
+		{
+			const color = 0xffffff;
+			const intensity = 1;
+			const light = new THREE.SpotLight(color);
+			light.position.set(0, -100, 0);
+			this.sceneStarInfo.add(light);
+
+			// this.helperGrid = new THREE.GridHelper(10, 10);
+			// this.helperGrid.position.y = -0.5;
+			// this.scene2.add(this.helperGrid);
+		}
+
+		// header for star info
+
+		this.headerdifferentTypeStar = new THREE.PlaneGeometry(20, 20);
+		this.imgSrcdifferentTypeStar = '/images/differentTypeStar.png';
+		this.meshdifferentTypeStar;
+		this.texdifferentTypeStar = new THREE.TextureLoader().load(this.imgSrcdifferentTypeStar, tex => {
+			tex.needsUpdate = true;
+			this.meshdifferentTypeStar.scale.set(1.0, tex.image.height / tex.image.width, 1.0);
+		});
+		this.materialdifferentTypeStar = new THREE.MeshBasicMaterial({
+			map: this.texdifferentTypeStar,
+			transparent: true,
+		});
+		this.meshdifferentTypeStar = new THREE.Mesh(this.headerdifferentTypeStar, this.materialdifferentTypeStar);
+		this.meshdifferentTypeStar.position.set(0, 6, -10);
+		this.sceneStarInfo.add(this.meshdifferentTypeStar);
+		this.interaction_startInfo = new Interaction(this.renderer, this.sceneStarInfo, this.camera);
+
+		//Options
+
+		const dwarf = 3;
+		const giant = 5;
+		//
+
+		const star_example = [
+			{
+				color: 'red',
+				temp: '1,800 - 3,500 °C',
+				age: 'middle',
+				size: 'dwarf',
+				descImage: '/images/reddwarf.jpg',
+				scale: 3,
+			},
+			{
+				color: 'red',
+				temp: '3,000 - 5,000 °C',
+				age: 'late',
+				size: 'giant',
+				descImage: '/images/redgi.jpg',
+				scale: 5,
+			},
+			{
+				color: 'yellow',
+				temp: '5,000 - 7,300 °C',
+				age: 'early',
+				size: 'dwarf',
+				descImage: '/images/yellow.jpg',
+				scale: 3,
+			},
+
+			{
+				color: 'blue',
+				temp: '7,300 - 200,000 °C',
+				age: 'middle',
+				size: 'giant',
+				descImage: '/images/blue.jpg',
+				scale: 5,
+			},
+
+			{
+				color: 'white',
+				temp: '4,000 - 150,000 °C',
+				age: 'dead',
+				size: 'dwarf',
+				descImage: '/images/whitedwa.jpg',
+				scale: 3,
+			},
+		];
+
+		star_example.map((example, index) => {
+			var geometryExample = new THREE.SphereGeometry(example.scale, 8, 8);
+			var materialExample = new THREE.MeshPhongMaterial({
+				color: example.color,
+			});
+			this.sphereExample = new THREE.Mesh(geometryExample, materialExample);
+			this.sphereExample.position.set(-95 + index * 50, 15, -105);
+			// this.sphereExample.rotateX = 10;
+			this.sceneStarInfo.add(this.sphereExample);
+
+			this.cardGeo = new THREE.PlaneGeometry(30, 30);
+			this.imageCArd = example.descImage;
+			this.meshCard;
+			this.textCard = new THREE.TextureLoader().load(this.imageCArd, tex => {
+				tex.needsUpdate = true;
+				this.meshCard.scale.set(1.0, tex.image.height / tex.image.width, 1.0);
+			});
+			this.materialdifferentTypeStar = new THREE.MeshBasicMaterial({
+				map: this.textCard,
+				transparent: true,
+			});
+			this.meshCard = new THREE.Mesh(this.cardGeo, this.materialdifferentTypeStar);
+			this.meshCard.position.set(-70 + index * 35, -20, -80);
+			this.sceneStarInfo.add(this.meshCard);
+
+			for (var i = 1, scaleX = 1.1, scaleY = 1.1, scaleZ = 1.1; i < 5; i++) {
+				var starGlow = new THREE.Mesh(
+					new THREE.SphereGeometry(example.scale, 32, 32),
+					new THREE.MeshBasicMaterial({
+						color: example.color,
+						transparent: true,
+						opacity: 0.5,
+					})
+				);
+				starGlow.castShadow = false;
+				scaleX += 0.4 + Math.random() * 0.5;
+				scaleY += 0.4 + Math.random() * 0.5;
+				scaleZ += 0.4 + Math.random() * 0.5;
+				starGlow.scale.set(scaleX, scaleY, scaleZ);
+				starGlow.origScale = {
+					x: scaleX,
+					y: scaleY,
+					z: scaleZ,
+				};
+				starGlow.position.set(-95 + index * 50, 15, -105);
+
+				// this.glows.push(starGlow);
+				this.sceneStarInfo.add(starGlow);
+			}
+		});
+
+		this.startGameFinalBtnGeo = new THREE.PlaneGeometry(200, 150);
+		this.imgSrcStart = '/images/startGame.png';
+		this.meshGameStartBtn;
+		this.tex = new THREE.TextureLoader().load(this.imgSrcStart, tex => {
+			tex.needsUpdate = true;
+			this.meshGameStartBtn.scale.set(1.0, tex.image.height / tex.image.width, 1.0);
+		});
+		this.materialStartButton = new THREE.MeshBasicMaterial({
+			map: this.tex,
+			transparent: true,
+		});
+		this.meshGameStartBtn = new THREE.Mesh(this.startGameFinalBtnGeo, this.materialStartButton);
+		this.meshGameStartBtn.position.set(10, -105, -190);
+		this.sceneStarInfo.add(this.meshGameStartBtn);
+		this.meshGameStartBtn.cursor = 'pointer';
+		this.meshGameStartBtn.on('click', ev => {
+			console.log('i am here', ev);
+			currentScene = 2;
+			this.renderer.clear();
+			console.log('scene', currentScene);
+			this.camera.position.set(0, 0, 0);
+			this.update(this.scene2, this.camera);
+			return currentScene;
+		});
 
 		if (currentScene === 1) {
 			this.update(this.scene, this.camera);
